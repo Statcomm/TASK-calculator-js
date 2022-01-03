@@ -71,11 +71,22 @@ function calc() {
     case "+":
       result = assemblyArray[0] + assemblyArray[1];
       break;
+      case "-":
+      result = assemblyArray[0] - assemblyArray[1];
+      break;
+      case "*":
+      result = assemblyArray[0] * assemblyArray[1];
+      break;
+      case "/":
+      result = assemblyArray[0] / assemblyArray[1];
+      break;
 
     default:
       break;
+      
+
   }
-  return result;
+  return printOnConsole(result);
 }
 
 /** Supporting functions
