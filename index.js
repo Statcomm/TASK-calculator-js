@@ -17,23 +17,30 @@
 
 let numbersArray = [];
 let assemblyArray = [];
+
 let valueInput = "";
+let result = 0;
+let opratorUser = "";
 
 function buttonClick(text) {
   console.log("Clicking", text);
-  if (op(text)) {
-    printOnConsole(numbersArray);
+
+  if (checkInput(text)) {
     for (let i = 0; i < numbersArray.length; i++) {
       valueInput = valueInput + numbersArray[i];
     }
     assemblyArray.push(valueInput);
     valueInput = "";
     numbersArray = [];
+
+    opratorUser = checkInput(text);
   } else {
-    if (text == 0 && numbersArray[0] == 0) {
+    if (text == "=") {
+      return printOnConsole(result);
+    } else if (text == 0 && numbersArray[0] == 0) {
       numbersArray[0].pop();
     } else if (text === "AC") {
-      numbersArray = [];
+      clear();
     } else {
       numbersArray.push(text);
     }
@@ -44,7 +51,12 @@ function buttonClick(text) {
   console.log(assemblyArray);
 }
 
-function op(text) {
+function clear() {
+  numbersArray = [];
+  assemblyArray = [];
+  result = "";
+}
+function checkInput(text) {
   const operator =
     text == "+" ||
     text == "-" ||
@@ -54,6 +66,18 @@ function op(text) {
     text == "±";
   return operator;
 }
+function calc() {
+  switch (opratorUser) {
+    case "+":
+      result = assemblyArray[0] + assemblyArray[1];
+      break;
+
+    default:
+      break;
+  }
+  return result;
+}
+
 /** Supporting functions
  * 1. `printOnConsole(text)`, takes any text, and renders the console part of the web page
  * 2. `updateHistory(array)`, takes an array of strings and renders it on the web page
