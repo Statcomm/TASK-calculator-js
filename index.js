@@ -15,78 +15,44 @@
 // the next set of strings
 // AC will clear the array
 
-let numbersArray = [];
-let assemblyArray = [];
-
-let valueInput = "";
-let result = 0;
-let opratorUser = "";
+let num1;
+let num2;
+let operator;
+let result;
+let history = [];
 
 function buttonClick(text) {
   console.log("Clicking", text);
-
-  if (checkInput(text)) {
-    for (let i = 0; i < numbersArray.length; i++) {
-      valueInput = valueInput + numbersArray[i];
-    }
-    assemblyArray.push(valueInput);
-    valueInput = "";
-    numbersArray = [];
-
-    opratorUser = checkInput(text);
-  } else {
-    if (text == "=") {
-      return printOnConsole(result);
-    } else if (text == 0 && numbersArray[0] == 0) {
-      numbersArray[0].pop();
-    } else if (text === "AC") {
-      clear();
-    } else {
-      numbersArray.push(text);
-    }
+  if (text == "+" || text == "-" || text == "x" || text == "÷" || text == "%") {
+    operator = text;
+  } else if (text == "AC") {
+    printOnConsole(0);
+    num1 = num2 = 0;
+  } else if (!isNaN(text)) {
+    printOnConsole(text);
+    if (!num1) num1 = +text;
+    else if (operator) num2 = +text;
+  } else if (text == "=") {
+    result = calc(num1, num2, operator);
+    printOnConsole(result);
+    history.push(`${num1} ${operator} ${num2} = ${result}`);
+    updateHistory(history);
   }
-
-  printOnConsole(numbersArray.join(""));
-
-  console.log(assemblyArray);
 }
 
-function clear() {
-  numbersArray = [];
-  assemblyArray = [];
-  result = "";
-}
-function checkInput(text) {
-  const operator =
-    text == "+" ||
-    text == "-" ||
-    text == "x" ||
-    text == "÷" ||
-    text == "%" ||
-    text == "±";
-  return operator;
-}
-function calc() {
-  switch (opratorUser) {
+function calc(num1, num2, operator) {
+  switch (operator) {
     case "+":
-      result = assemblyArray[0] + assemblyArray[1];
-      break;
-      case "-":
-      result = assemblyArray[0] - assemblyArray[1];
-      break;
-      case "*":
-      result = assemblyArray[0] * assemblyArray[1];
-      break;
-      case "/":
-      result = assemblyArray[0] / assemblyArray[1];
-      break;
-
-    default:
-      break;
-      
-
+      return num1 + num2;
+    case "-":
+      return num1 - num2;
+    case "x":
+      return num1 * num2;
+    case "÷":
+      return num1 / num2;
+    case "%":
+      return num1 % num2; //need to fix
   }
-  return printOnConsole(result);
 }
 
 /** Supporting functions
@@ -96,4 +62,4 @@ function calc() {
 
 // Remove Me after testing
 // printOnConsole("123");
-updateHistory(["This is a sample historry", "1 + 5 = 6", "5 x 10 = 50"]);
+//updateHistory(["This is a sample historry", "1 + 5 = 6", "5 x 10 = 50"]);
